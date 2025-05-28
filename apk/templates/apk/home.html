@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <link rel="stylesheet" href="{% static 'apk/style.css' %}">
+    <style>
+        .pemasukan { color: blue; }
+        .pengeluaran { color: red; }
+    </style>
+</head>
+<body>
+        <div class="header">
+            <img src="{% static 'apk/image/logo.png' %}" alt="HoneyMoney Logo" class="logo">
+            <div class="honeymoney">Honey Money</div>
+            <div class="header-title">
+                <h1><span style="color:#1992d4;">Hallo,</span> {{ user.nama }}</h1>
+                <p>Selamat datang di HoneyMoney</p>
+            </div>
+        </div>
+        <div class="main-container">
+            <div class="left-panel">
+                <div class="card riwayat">
+                    <h3 class="card-title"><a href="#" style="text-decoration: none; color: #1992d4;">Catatan Keuangan</a></h3>
+                    <table class="riwayat-table">
+                        <tbody>
+                        {% for transaksi in transaksi_list|slice:'0:4' %}
+                        <tr>
+                            <td class="icon-cell">
+                                {% if transaksi.nominal > 0 %}
+                                    <span class="icon pemasukan-icon"><img src="{% static 'apk/image/income.png' %}" alt=""></span>
+                                {% else %}
+                                    <span class="icon pengeluaran-icon"><img src="{% static 'apk/image/outcome.png' %}" alt=""></span>
+                                {% endif %}
+                            </td>
+                            <td class="desc-cell">{{ transaksi.keterangan }}</td>
+                            <td class="date-cell">{{ transaksi.tanggal|date:'d M Y' }}</td>
+                            <td class="nominal-cell {% if transaksi.nominal > 0 %}pemasukan{% else %}pengeluaran{% endif %}">Rp. {{ transaksi.nominal|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4">Belum ada transaksi.</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="legend">
+                        <span class="icon pengeluaran-icon"></span> Pengeluaran
+                        <span class="icon pemasukan-icon"></span> Pemasukan
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div style="flex:1; min-width:320px; flex-direction:column; align-items:center; justify-content:center;">
+                    <div class="card grafik" style=" display:flex; align-items:center; justify-content:center;">
+                        <h3 class="card-title" style="text-align:center;">Grafik</h3>
+                        <canvas id="saldoChart" width="520" height="240"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-container">
+            <div class="card form-card">
+                <form method="post" action="" class="form-pemasukan">
+                    {% csrf_token %}
+                    <input type="hidden" name="jenis" value="pemasukan">
+                    <h3 class="card-title"><span style="color:#1992d4;">Catat</span> Pemasukan</h3>
+                    <label>Jumlah<br>Rp. <input type="number" step="0.01" name="nominal" required></label><br>
+                    <label>Keterangan<br><input type="text" name="keterangan" required></label><br>
+                    <button type="submit" class="btn-submit">Simpan</button>
+                </form>
+            </div>
+            <div class="card form-card">
+                <form method="post" action="" class="form-pengeluaran">
+                    {% csrf_token %}
+                    <input type="hidden" name="jenis" value="pengeluaran">
+                    <h3 class="card-title"><span style="color:#1992d4;">Catat</span> Pengeluaran</h3>
+                    <label>Jumlah<br>Rp. <input type="number" step="0.01" name="nominal" required></label><br>
+                    <label>Keterangan<br><input type="text" name="keterangan" required></label><br>
+                    <button type="submit" class="btn-submit">Simpan</button>
+                </form>
+            </div>
+        </div>
+        <div class="fab-menu" id="fabMenu">
+            <div class="fab-actions">
+                <a href="/home/{{ user.id }}/" class="fab-action" title="Home"><img src="{% static 'apk/image/home.png' %}" alt="Home"></a>
+                <a href="#" class="fab-action" title="Kalkulator Investasi"><img src="{% static 'apk/image/calculator.png' %}" alt="Kalkulator"></a>
+                <a href="#" class="fab-action" title="Video Edukasi"><img src="{% static 'apk/image/video.png' %}" alt="Video"></a>
+                <a href="#" class="fab-action" title="Info Akun"><img src="{% static 'apk/image/user.png' %}" alt="Akun"></a>
+            </div>
+            <button class="fab-btn" id="fabBtn" type="button"><img src="{% static 'apk/image/menu.png' %}" alt="Menu"></button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const saldoData = JSON.parse('{{ saldo_list|escapejs }}');
+            const tanggalData = JSON.parse('{{ tanggal_list|escapejs }}');
+            const ctx = document.getElementById('saldoChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: tanggalData.map((_, i) => i + 1), // hide actual date, use index
+                    datasets: [{
+                        label: '', // hide legend label
+                        data: saldoData,
+                        borderColor: '#1992d4',
+                        backgroundColor: 'rgba(25,146,212,0.10)',
+                        fill: true,
+                        tension: 0.35,
+                        pointRadius: 0,
+                        borderWidth: 3,
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: () => null // hide tooltip title
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false // hide x axis (tanggal)
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#eaf1fb' }
+                        }
+                    }
+                }
+            });
+            const fabMenu = document.getElementById('fabMenu');
+            const fabBtn = document.getElementById('fabBtn');
+            fabBtn.addEventListener('click', function() {
+                fabMenu.classList.toggle('open');
+            });
+            document.addEventListener('click', function(e) {
+                if (!fabMenu.contains(e.target)) {
+                    fabMenu.classList.remove('open');
+                }
+            });
+        </script>
+    </body>
+</html>

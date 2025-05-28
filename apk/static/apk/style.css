@@ -1,0 +1,376 @@
+/* style.css untuk aplikasi Honeymoney */
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7fa;
+    margin: 0;
+    padding: 0 0 40px 0;
+}
+h2 {
+    color: #2d3e50;
+}
+
+.card-title.a{
+    text-decoration: none;
+    color: #1976d2;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+th, td {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+th {
+    background: #546f94;
+}
+.pemasukan {
+    color: #1976d2;
+    font-weight: bold;
+}
+.pengeluaran {
+    color: #d32f2f;
+    font-weight: bold;
+}
+form {
+    margin-bottom: 16px;
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    max-width: 350px;
+}
+input[type="text"], input[type="number"] {
+    width: 90%;
+    padding: 6px;
+    margin: 6px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+}
+button {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover {
+    background: #1565c0;
+}
+canvas {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px 40px 0 40px;
+    margin-bottom: 2%;
+    background: #f7f7fa;
+}
+.logo {
+    width: 50px;
+    height: 61px;
+    margin-right: 24px;
+}
+.header-title h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1992d4;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.honeymoney{
+    color: #1976d2;
+    font-weight: bold;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 22%;
+}
+.header-title p {
+    margin: 0;
+    color: #222;
+    font-size: 1.1rem;
+}
+.main-container {
+    display: flex;
+    gap: 32px;
+    margin: 24px 40px 0 40px;
+}
+.left-panel, .right-panel {
+    flex: 1;
+}
+.card {
+    background: #eaf1fb;
+    border-radius: 24px;
+    box-shadow: 0 2px 8px rgba(25,146,212,0.04);
+    padding: 24px 32px;
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #1976d2;
+    margin:0 0 20px;
+}
+.riwayat-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    background: transparent;
+}
+.riwayat-table td {
+    border: none;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border-bottom: #1976d2 2px solid;
+}
+.icon-cell {
+    width: 32px;
+}
+.icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    vertical-align: middle;
+}
+.icon-cell img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+.pemasukan-icon {
+    background-image: url('{% static "apk/image/income.png" %}');
+    max-width: 10%;
+}
+.pengeluaran-icon {
+    background-image: url('{% static "apk/image/outcome.png" %}');
+}
+.desc-cell {
+    color: #1992d4;
+    font-weight: 600;
+
+}
+.date-cell {
+    color: #888;
+    font-size: 0.95rem;
+    text-align: right;
+}
+.nominal-cell {
+    font-weight: bold;
+    text-align: right;
+}
+.legend {
+    font-size: 1rem;
+    color: #1992d4;
+}
+.legend .icon {
+    margin-right: 4px;
+}
+.grafik {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+}
+.bottom-container {
+    display: flex;
+    gap: 32px;
+    margin: 0px 40px 0 40px;
+}
+.form-card {
+    flex: 1;
+    border-radius: 24px;
+    padding: 0px 32px;
+    margin-bottom: 0px;
+    min-width: 320px;
+
+}
+.form-card label {
+    font-weight: 600;
+    color: #1992d4;
+}
+.form-card input[type="text"], .form-card input[type="number"] {
+    width: 90%;
+    padding: 6px 0 6px 0;
+    margin: 0px 0 0px 0;
+    border: none;
+    border-bottom: 2px solid #1976d2;
+    border-radius: 0;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+.form-card input[type="text"]:focus, .form-card input[type="number"]:focus {
+    border-bottom: 2.5px solid #1565c0;
+}
+.card-form-card {
+    background: #eaf1fb;
+    border-radius: 24px;
+    padding: 50px 32px;
+    margin-bottom: 24px;
+    min-width: 45%;
+}
+
+.form-pemasukan, .form-pengeluaran {
+    display: flex;
+    flex-direction: column;
+    background-color: #eaf1fb;
+    min-width: 600px;
+    padding: 24px;
+    
+}
+.form-card button:hover {
+    background: #1565c0;
+}
+
+.btn-submit {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 15%;
+    margin-top: 10px;
+}
+.fab-menu {
+    position: fixed;
+    right: 32px;
+    bottom: 32px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fab-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #1992d4 60%, #3ec6ff 100%);
+    box-shadow: 0 4px 16px rgba(25,146,212,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+.fab-btn img {
+    width: 38px;
+    height: 38px;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin: auto;
+}
+.fab-actions {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    gap: 16px;
+    position: relative;
+    width: auto;
+    background: none;
+    box-shadow: none;
+}
+.fab-menu.open .fab-actions {
+    display: flex;
+}
+.fab-action {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #1992d4 60%, #3ec6ff 100%);
+    box-shadow: 0 2px 8px rgba(25,146,212,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    border: none;
+    outline: none;
+    margin-bottom: 8px;
+    position: relative;
+    padding: 0;
+}
+.fab-action img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin: auto;
+}
+.fab-action:hover {
+    background: linear-gradient(180deg, #3ec6ff 60%, #1992d4 100%);
+    box-shadow: 0 4px 16px rgba(25,146,212,0.18);
+}
+.card.riwayat {
+    transition: all 0.4s cubic-bezier(.4,2,.6,1);
+    cursor: pointer;
+    max-width: 700px;
+    margin: 0 auto 24px auto;
+    min-height: 220px;
+    box-shadow: 0 2px 8px rgba(25,146,212,0.10);
+}
+.card.riwayat.expanded {
+    max-width: 1000px;
+    min-height: 520px;
+    box-shadow: 0 8px 32px rgba(25,146,212,0.18);
+    z-index: 10;
+}
+.riwayat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1992d4;
+    margin-bottom: 8px;
+    padding: 0 12px;
+}
+.riwayat-title {
+    flex: 1;
+    text-align: center;
+    color: #1976d2;
+    font-size: 1.3rem;
+}
+.riwayat-arrow {
+    font-size: 1.5rem;
+    margin-right: 12px;
+    color: #1976d2;
+    transition: transform 0.3s;
+}
+.card.riwayat.expanded .riwayat-arrow {
+    transform: rotate(180deg);
+}
+@media (max-width: 900px) {
+    .main-container, .bottom-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
