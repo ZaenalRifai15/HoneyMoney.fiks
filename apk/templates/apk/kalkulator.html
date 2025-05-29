@@ -1,0 +1,70 @@
+<!-- Tidak perlu extends, gunakan HTML mandiri -->
+<!DOCTYPE html>
+<html lang="id">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Investasi</title>
+    <link rel="stylesheet" href="{% static 'apk/kalkulator.css' %}">
+</head>
+<body>
+    <div class="header">
+            <img src="{% static 'apk/image/logo.png' %}" alt="HoneyMoney Logo" class="logo">
+            <div class="honeymoney">Honey Money</div>
+             <h2 class="title"><span style="color:#009FE3">Kalkulator</span> Investasi</h2>
+        </div>
+     
+<div class="calculator-container">
+    <form method="post" action="" class="calculator-form" id="formKalkulator">
+        {% csrf_token %}
+        <label>1. Jumlah Uang Anda Saat Ini</label><br>
+        <span>Rp.</span><input type="number" name="uang_awal" required><br><br>
+        <label>2. Jumlah Uang Yang Ingin Anda Tabung</label><br>
+        <span>Rp.</span><input type="number" name="uang_tambahan" required>
+        <div class="period-group">
+            <input type="radio" name="periode" value="hari" required> Per-hari
+            <input type="radio" name="periode" value="minggu"> Per-minggu
+            <input type="radio" name="periode" value="bulan"> Per-bulan
+        </div>
+        <label>3. Return Investasi (%)</label><br>
+        <input type="number" name="return_investasi" step="0.01" required> %<br><br>
+        <label>4. Berapa Lama Anda Ingin Menabung</label><br>
+        <input type="number" name="tahun" min="0" placeholder="Tahun"> Tahun
+        <input type="number" name="bulan" min="0" placeholder="Bulan"> Bulan<br><br>
+        <button type="submit" class="btn-hasil">Lihat Hasil Investasi <span class="icon-play">▶</span></button>
+    </form>
+    <div id="hasilInvestasi" style="display:none;">
+        <h2 class="title"><span style="color:#009FE3">Hasil</span> Investasi</h2>
+        <div class="hasil-card">
+            <div class="hasil-row">
+                <span class="hasil-label">Hasil Tabungan Anda</span>
+                <span class="hasil-value">Rp. <span id="tabunganAnda">0</span></span>
+            </div>
+            <div class="hasil-row">
+                <span class="hasil-label">Hasil Dari Return Investasi Anda</span>
+                <span class="hasil-value">Rp. <span id="returnInvestasi">0</span></span>
+            </div>
+        </div>
+        <div class="hasil-total-bar">
+            <span class="hasil-total-icon">
+                 <button id="btnKembali" style="background:transparent;border:none;cursor:pointer;outline:none;">
+                     <img src="{% static 'apk/image/back.png' %}" style="width:28px;vertical-align:middle;" alt="Kembali">
+                 </button>
+             </span>
+            <span class="hasil-total-label">Total :</span>
+            <span class="hasil-total-value">Rp. <span id="totalAkhir">0</span></span>
+        </div>
+    </div>
+     <div class="fab-menu" id="fabMenu">
+            <div class="fab-actions">
+                <a href="/home/{{ user.id }}/" class="fab-action" title="Home"><img src="{% static 'apk/image/home.png' %}" alt="Home"></a>
+                <a href="{% url 'kalkulator' %}" class="fab-action" title="Kalkulator Investasi"><img src="{% static 'apk/image/calculator.png' %}" alt="Kalkulator"></a>
+                <a href="#" class="fab-action" title="Video Edukasi"><img src="{% static 'apk/image/video.png' %}" alt="Video"></a>
+                <a href="/profil/{{ user.id }}/" class="fab-action" title="Info Akun"><img src="{% static 'apk/image/user.png' %}" alt="Akun"></a>
+            </div>
+            <button class="fab-btn" id="fabBtn" type="button"><img src="{% static 'apk/image/menu.png' %}" alt="Menu"></button>
+        </div>
+        <script src="{% static 'apk/js/kalkulator.js' %}"></script>
+</body>
+</html>
+ 

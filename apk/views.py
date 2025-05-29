@@ -59,3 +59,35 @@ def home(request, user_id):
         'saldo_list': json.dumps(saldo_list),
         'tanggal_list': json.dumps(tanggal_list),
     })
+
+def kalkulator(request):
+    hasil = None
+    if request.method == 'POST':
+        uang_awal = float(request.POST.get('uang_awal', 0))
+        uang_tambahan = float(request.POST.get('uang_tambahan', 0))
+        periode = request.POST.get('periode')
+        return_investasi = float(request.POST.get('return_investasi', 0))
+        tahun = int(request.POST.get('tahun', 0))
+        bulan = int(request.POST.get('bulan', 0))
+        # Hitung total bulan
+        total_bulan = tahun * 12 + bulan
+        if periode == 'hari':
+            frekuensi = 30
+        elif periode == 'minggu':
+            frekuensi = 4
+        else:
+            frekuensi = 1
+        # Konversi return ke per bulan
+        r = return_investasi / 100 / 12
+        saldo = uang_awal
+        for i in range(total_bulan):
+            saldo = saldo * (1 + r) + uang_tambahan * frekuensi
+        hasil = saldo
+    return render(request, 'apk/kalkulator.html', {'hasil': hasil})
+
+def profil(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST' and request.FILES.get('foto_profil'):
+        user.foto_profil = request.FILES['foto_profil']
+        user.save()
+    return render(request, 'apk/profil.html', {'user': user})

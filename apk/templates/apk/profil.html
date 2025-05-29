@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Pengguna</title>
+    <link rel="stylesheet" href="{% static 'apk/profil.css' %}">
+</head>
+<body>
+<div class="header">
+    <img src="{% static 'apk/image/logo.png' %}" alt="HoneyMoney Logo" class="logo">
+    <div class="honeymoney">HoneyMoney</div>
+    <h2 class="title">Profil Pengguna</h2>
+</div>
+<div class="calculator-container">
+    <a href="/home/{{ user.id }}/"><img src="{% static 'apk/image/back.png' %}" alt="Kembali" class="back-icon"></a>
+   <div class="profil-container">
+     <div class="profil-header">
+        <form method="post" enctype="multipart/form-data" class="profil-foto-form">
+            {% csrf_token %}
+            <label for="fotoProfilInput" class="profil-foto-label">
+                {% if user.foto_profil %}
+                    <img src="{{ user.foto_profil.url }}" alt="Foto Profil" class="profil-foto">
+                {% else %}
+                    <img src="{% static 'apk/image/orang.png' %}" alt="Foto Profil" class="profil-foto">
+                {% endif %}
+            </label>
+            <input type="file" name="foto_profil" id="fotoProfilInput" class="profil-foto-input" accept="image/*" onchange="this.form.submit()">
+        </form>
+        <div class="profil-info">
+            <div class="profil-nama">{{ user.nama }}</div>
+            <div class="profil-email">{{ user.email }}</div>
+        </div>
+    </div>
+    <div class="profil-menu">
+        <div class="profil-menu-item">
+            <img src="{% static 'apk/image/bahasa.png' %}" class="profil-menu-icon">
+            <span class="profil-menu-label">Bahasa</span>
+        </div>
+        <div class="profil-menu-item">
+            <img src="{% static 'apk/image/Password.png' %}" class="profil-menu-icon">
+            <span class="profil-menu-label">Ubah Password</span>
+        </div>
+        <div class="profil-menu-item">
+            <img src="{% static 'apk/image/help.png' %}" class="profil-menu-icon">
+            <span class="profil-menu-label">Bantuan</span>
+        </div>
+        <div class="profil-menu-item">
+            <img src="{% static 'apk/image/logout.png' %}" class="profil-menu-icon">
+            <span class="profil-menu-label">Logout</span>
+        </div>
+    </div>
+   </div>
+   
+</div>
+</body>
+</html>

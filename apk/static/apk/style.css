@@ -242,6 +242,18 @@ canvas {
     padding: 24px;
     
 }
+
+.outcome-icon, .income-icon {
+    size: 1rem;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.income-img, .outcome-img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
 .form-card button:hover {
     background: #1565c0;
 }
@@ -368,9 +380,11 @@ canvas {
 .card.riwayat.expanded .riwayat-arrow {
     transform: rotate(180deg);
 }
+
 @media (max-width: 900px) {
     .main-container, .bottom-container {
         flex-direction: column;
         gap: 16px;
     }
 }
+
