@@ -3,6 +3,7 @@ from .models import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import json
+from django.contrib.auth import logout as django_logout
 
 # Create your views here.
 def menu_awal(request):
@@ -43,15 +44,16 @@ def home(request, user_id):
         else:
             nominal = abs(float(nominal))
         Transaksi.objects.create(user=user, keterangan=keterangan, nominal=nominal)
-    transaksi_list = Transaksi.objects.filter(user=user).order_by('tanggal')
+    # Ambil semua transaksi untuk saldo/grafik, tapi hanya 3 terakhir untuk tampilan
+    semua_transaksi = Transaksi.objects.filter(user=user).order_by('tanggal')
+    transaksi_list = Transaksi.objects.filter(user=user).order_by('-tanggal')[:3]
     saldo = 0
     saldo_list = []
     tanggal_list = []
-    for t in transaksi_list:
+    for t in semua_transaksi:
         saldo += t.nominal
         saldo_list.append(float(saldo))
         tanggal_list.append(t.tanggal.strftime('%d-%m-%Y %H:%M'))
-    transaksi_list = transaksi_list.order_by('-tanggal')
     return render(request, 'apk/home.html', {
         'user': user,
         'transaksi_list': transaksi_list,
@@ -91,3 +93,15 @@ def profil(request, user_id):
         user.foto_profil = request.FILES['foto_profil']
         user.save()
     return render(request, 'apk/profil.html', {'user': user})
+
+def edukasi(request):
+    edukasi_list = Video.objects.all()
+    return render(request, 'apk/edukasi.html', {'edukasi_list': edukasi_list})
+
+def logout(request):
+    # Hapus session user (jika ada) dan redirect ke menu awal
+    if 'user_id' in request.session:
+        del request.session['user_id']
+    # Jika pakai auth bawaan Django (opsional, jika pakai session login)
+    django_logout(request)
+    return HttpResponseRedirect(reverse('menu_awal'))

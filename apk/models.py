@@ -21,3 +21,11 @@ class Transaksi(models.Model):
     def __str__(self):
         return f"{self.keterangan} ({self.nominal})"
 
+class Video(models.Model):
+    judul = models.CharField(max_length=200)
+    penulis = models.CharField(max_length=100)
+    durasi = models.CharField(max_length=20)
+    youtube_id = models.CharField(max_length=20)
+
+    def thumbnail_url(self):
+        return f"https://img.youtube.com/vi/{self.youtube_id}/hqdefault.jpg"

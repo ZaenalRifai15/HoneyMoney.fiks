@@ -84,7 +84,7 @@
             <div class="fab-actions">
                 <a href="/home/{{ user.id }}/" class="fab-action" title="Home"><img src="{% static 'apk/image/home.png' %}" alt="Home"></a>
                 <a href="{% url 'kalkulator' %}" class="fab-action" title="Kalkulator Investasi"><img src="{% static 'apk/image/calculator.png' %}" alt="Kalkulator"></a>
-                <a href="#" class="fab-action" title="Video Edukasi"><img src="{% static 'apk/image/video.png' %}" alt="Video"></a>
+                <a href="{% url 'edukasi' %}" class="fab-action" title="Video Edukasi"><img src="{% static 'apk/image/video.png' %}" alt="Video"></a>
                 <a href="/profil/{{ user.id }}/" class="fab-action" title="Info Akun"><img src="{% static 'apk/image/user.png' %}" alt="Akun"></a>
             </div>
             <button class="fab-btn" id="fabBtn" type="button"><img src="{% static 'apk/image/menu.png' %}" alt="Menu"></button>

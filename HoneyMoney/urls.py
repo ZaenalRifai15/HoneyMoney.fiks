@@ -12,6 +12,8 @@ urlpatterns = [
     path('home/<int:user_id>/', views.home, name='home'),
     path('kalkulator/', views.kalkulator, name='kalkulator'),
     path('profil/<int:user_id>/', views.profil, name='profil'),
+    path('edukasi/', views.edukasi, name='edukasi'),
+    path('logout/', views.logout, name='logout'),  # Tambah route logout
 ]
 
 if settings.DEBUG:
