@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoneyMoney</title>
+    <link rel="stylesheet" href="{% static 'styles/landing-page.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{% static 'image/logo.png' %}" alt="HoneyMoney Logo">
+            <span>HoneyMoney</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{% url 'register' %}">Daftar</a>
+            <a href="{% url 'login' %}">Login</a>
+        </nav>
+    </header>
+
+    <!-- Hero Image dipisah tapi tetap di pojok kanan -->
+    <div class="hero-image">
+        <img src="{% static 'image/LandingPage.png' %}" alt="Finance Hero" class="hero-img">
+    </div>
+
+    <!-- Konten teks -->
+    <main class="content">
+        <div class="content-text">
+            <h1>
+                Kelola Keuangan Anda Lebih Mudah Bersama <span class="honey">Honey<span class="money">Money</span></span>
+            </h1>
+            <p>
+                Kelola keuangan pribadi dengan mudah lewat HoneyMoney! Catat transaksi, atur anggaran, dan
+                pelajari finansial semua cepat dan praktis dari perangkat Anda.
+            </p>
+        </div>
+    </main>
+</body>
+</html>

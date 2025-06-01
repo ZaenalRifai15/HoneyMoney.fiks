@@ -1,0 +1,219 @@
+.navbar {
+  padding: 20px 40px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  height: 40px;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  color: #045692;
+}
+
+.logo-text span {
+  color: #00aaff; /* Atau sesuaikan dengan biru gradasi yang kamu pakai */
+}
+
+.edukasi-search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+}
+.edukasi-search {
+    width: 420px;
+    padding: 12px 44px 12px 24px;
+    border-radius: 32px;
+    border: none;
+    background: #fff;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(25,146,212,0.08);
+    outline: none;
+}
+.edukasi-search-icon {
+    width: 28px;
+    margin-left: -38px;
+    opacity: 0.5;
+}
+.edukasi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.edukasi-card {
+    background: #caefff;
+    box-shadow: 0 2px 8px rgba(0, 42, 65, 0.04);
+    padding: 15px 0 12px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 220px;
+    transition: box-shadow 0.2s;
+    border-radius: 50px 10px 50px 10px;
+}
+.edukasi-card:hover {
+    box-shadow: 0 8px 32px rgba(25,146,212,0.18);
+}
+.edukasi-img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+}
+.edukasi-card-content {
+    padding: 0px 18px 0 18px;
+    padding-left: 10%;
+    padding-right: 10% ;
+}
+
+.edukasi-card-image {
+    border-radius: 50px 10px 50px 10px;
+    overflow: hidden;
+    width: 75%;
+}
+
+.edukasi-card-content a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.edukasi-judul {
+    font-size:  14px;
+    font-weight: 600;
+    color: #1976d2;
+    margin-bottom: 6px;
+    margin-left: 5%;
+    align-items: center;
+    justify-content: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.8em;
+    line-height: 1.4em;
+    word-break: break-word;
+}
+.edukasi-meta {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    margin-left: 5%;
+    align-items: center;
+    gap: 8px;
+}
+.dot {
+    width: 6px;
+    height: 6px;
+    background: #b0c4d4;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.fab-menu {
+    position: fixed;
+    right: 32px;
+    bottom: 32px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fab-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #1992d4 60%, #3ec6ff 100%);
+    box-shadow: 0 4px 16px rgba(25,146,212,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
+.fab-btn img {
+    width: 38px;
+    height: 38px;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin: auto;
+}
+
+.fab-actions {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    gap: 16px;
+    position: relative;
+    width: auto;
+    background: none;
+    box-shadow: none;
+}
+
+.fab-menu.open .fab-actions {
+    display: flex;
+}
+
+.fab-action {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #1992d4 60%, #3ec6ff 100%);
+    box-shadow: 0 2px 8px rgba(25,146,212,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    border: none;
+    outline: none;
+    margin-bottom: 8px;
+    position: relative;
+    padding: 0;
+}
+
+.fab-action img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin: auto;
+}
+
+.fab-action:hover {
+    background: linear-gradient(180deg, #3ec6ff 60%, #1992d4 100%);
+    box-shadow: 0 4px 16px rgba(25,146,212,0.18);
+}
+
+@media (max-width: 1100px) {
+    .edukasi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 700px) {
+    .edukasi-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .edukasi-search {
+        width: 90vw;
+    }
+}

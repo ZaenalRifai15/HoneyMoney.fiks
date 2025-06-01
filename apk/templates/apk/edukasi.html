@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Edukasi Keuangan</title>
+    <link rel="stylesheet" href="{% static 'styles/edukasi.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo-img">
+            <h1 class="logo-text">Honey<span>Money</span></h1>
+        </div>
+    </div>
+    <div class="edukasi-search-container">
+        <input type="text" class="edukasi-search" placeholder="Cari yang kamu perlukan">
+        <img src="{% static 'image/menu.png' %}" class="edukasi-search-icon" alt="Cari">
+    </div>
+    <div class="edukasi-grid">
+        {% for item in edukasi_list %}
+        <div class="edukasi-card">
+            <div class="edukasi-card-image">
+                <a href="https://www.youtube.com/watch?v={{ item.youtube_id }}" target="_blank">
+                <img src="{{ item.thumbnail_url }}" class="edukasi-img" alt="Edukasi">
+            </a>
+            </div>
+            <div class="edukasi-card-content">
+                <div class="edukasi-judul"><a href="https://www.youtube.com/watch?v={{ item.youtube_id }}" target="_blank">{{ item.judul }}</a></div>
+                <div class="edukasi-meta">{{ item.penulis }}<span class="dot"></span>{{ item.durasi }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="fab-menu edukasi-fab" id="fabMenu">
+        <div class="fab-actions">
+            <a href="/home/{{ user.id }}/" class="fab-action" title="Home"><img src="{% static 'image/home.png' %}" alt="Home"></a>
+            <a href="{% url 'kalkulator' %}" class="fab-action" title="Kalkulator Investasi"><img src="{% static 'image/calculator.png' %}" alt="Kalkulator"></a>
+            <a href="{% url 'edukasi' %}" class="fab-action" title="Edukasi Keuangan"><img src="{% static 'image/video.png' %}" alt="Edukasi"></a>
+            <a href="/profil/{{ user.id }}/" class="fab-action" title="Info Akun"><img src="{% static 'image/user.png' %}" alt="Akun"></a>
+        </div>
+        <button class="fab-btn" id="fabBtn" type="button"><img src="{% static 'image/menu.png' %}" alt="Menu"></button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fabMenu = document.getElementById('fabMenu');
+            const fabBtn = document.getElementById('fabBtn');
+            if (fabBtn && fabMenu) {
+                fabBtn.addEventListener('click', function() {
+                    fabMenu.classList.toggle('open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

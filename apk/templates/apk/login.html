@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+</head>
+<body>  
+    <div class="login-container">
+        <form class="login-card" method="POST">
+            {% csrf_token %}
+            <img src="{% static 'image/HoneyMoney.png' %}" alt="Logo" class="login-logo" />
+            <h2>Login</h2>
+            
+            <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                class="login-input"
+                required
+            />
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="login-input"
+                required
+            />
+
+            <button class="login-button" type="submit">Login</button>
+
+            <div class="divider">
+                <span>Atau</span>
+            </div>
+
+            <button class="google-login-button" type="button" onclick="window.location.href='/auth/google'">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+                Daftar Dengan Google
+            </button>
+
+            <p class="signup-text">
+                Belum Punya Akun? <a href="{% url 'register' %}">Daftar</a>
+            </p>
+            {% if error %}
+                <p style="color:red">{{ error }}</p>
+            {% endif %}
+        </form>
+
+        <div class="login-illustration">
+            <img src="{% static 'image/FormCharacter.png' %}" alt="Illustration" />
+        </div>
+    </div>
+</body>
+</html>
