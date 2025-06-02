@@ -4,22 +4,30 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 import json
 from django.contrib.auth import logout as django_logout
+from django.contrib.auth.hashers import make_password
+from django.db import IntegrityError
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 def menu_awal(request):
     return render(request, 'apk/menu_awal.html')
-
 def login(request):
     error = None
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = User.objects.filter(username=username, password=password).first()
-        if user:
-            # Login berhasil, redirect ke halaman home/beranda
-            return HttpResponseRedirect(reverse('home', args=[user.id]))
-        else:
-            error = 'Username atau password salah.'
+
+        try:
+            user = User.objects.get(username=username)
+            # Gunakan check_password untuk membandingkan password hash
+            if check_password(password, user.password):
+                request.session['user_id'] = user.id
+                return HttpResponseRedirect(reverse('home', args=[user.id]))
+            else:
+                error = "Password salah."
+        except User.DoesNotExist:
+            error = "Username tidak ditemukan."
+
     return render(request, 'apk/login.html', {'error': error})
 
 def register(request):
@@ -28,12 +36,41 @@ def register(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        # Simpan user baru ke database
-        User.objects.create(nama=nama, username=username, email=email, password=password)
-        return HttpResponseRedirect(reverse('login'))
+        confirm_password = request.POST.get('confirm_password')
+
+        # Validasi kosong
+        if not all([nama, username, email, password, confirm_password]):
+            return render(request, 'apk/register.html', {'error': 'Semua kolom harus diisi.'})
+
+        # Validasi konfirmasi password
+        if password != confirm_password:
+            return render(request, 'apk/register.html', {'error': 'Konfirmasi password tidak cocok.'})
+
+        # Validasi username unik
+        if User.objects.filter(username=username).exists():
+            return render(request, 'apk/register.html', {'error': 'Username sudah digunakan.'})
+
+        # Validasi email unik
+        if User.objects.filter(email=email).exists():
+            return render(request, 'apk/register.html', {'error': 'Email sudah digunakan.'})
+
+        try:
+            User.objects.create(
+                nama=nama,
+                username=username,
+                email=email,
+                password=make_password(password)  # enkripsi password
+            )
+            return HttpResponseRedirect(reverse('login'))
+        except IntegrityError:
+            return render(request, 'apk/register.html', {'error': 'Pendaftaran gagal. Email atau username sudah digunakan.'})
+
     return render(request, 'apk/register.html')
 
 def home(request, user_id):
+    # Proteksi: hanya user yang sudah login dan sesuai user_id yang boleh akses
+    if 'user_id' not in request.session or request.session['user_id'] != user_id:
+        return HttpResponseRedirect(reverse('login'))
     user = User.objects.get(id=user_id)
     if request.method == 'POST':
         jenis = request.POST.get('jenis')
@@ -88,6 +125,9 @@ def kalkulator(request):
     return render(request, 'apk/kalkulator.html', {'hasil': hasil})
 
 def profil(request, user_id):
+    # Proteksi: hanya user yang sudah login dan sesuai user_id yang boleh akses
+    if 'user_id' not in request.session or request.session['user_id'] != user_id:
+        return HttpResponseRedirect(reverse('login'))
     user = User.objects.get(id=user_id)
     if request.method == 'POST' and request.FILES.get('foto_profil'):
         user.foto_profil = request.FILES['foto_profil']
@@ -95,9 +135,14 @@ def profil(request, user_id):
     return render(request, 'apk/profil.html', {'user': user})
 
 def edukasi(request):
+    user = None
+    if 'user_id' in request.session:
+        try:
+            user = User.objects.get(id=request.session['user_id'])
+        except User.DoesNotExist:
+            user = None
     edukasi_list = Video.objects.all()
-    return render(request, 'apk/edukasi.html', {'edukasi_list': edukasi_list})
-
+    return render(request, 'apk/edukasi.html', {'edukasi_list': edukasi_list, 'user': user})
 def logout(request):
     # Hapus session user (jika ada) dan redirect ke menu awal
     if 'user_id' in request.session:

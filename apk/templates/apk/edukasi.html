@@ -33,7 +33,9 @@
     </div>
     <div class="fab-menu edukasi-fab" id="fabMenu">
         <div class="fab-actions">
-            <a href="/home/{{ user.id }}/" class="fab-action" title="Home"><img src="{% static 'apk/image/home.png' %}" alt="Home"></a>
+            <a href="{% if user %}/home/{{ user.id }}/{% else %}#{% endif %}" class="fab-action" title="Home">
+                <img src="{% static 'apk/image/home.png' %}" alt="Home">
+            </a>
             <a href="{% url 'kalkulator' %}" class="fab-action" title="Kalkulator Investasi"><img src="{% static 'apk/image/calculator.png' %}" alt="Kalkulator"></a>
             <a href="{% url 'edukasi' %}" class="fab-action" title="Edukasi Keuangan"><img src="{% static 'apk/image/video.png' %}" alt="Edukasi"></a>
             <a href="/profil/{{ user.id }}/" class="fab-action" title="Info Akun"><img src="{% static 'apk/image/user.png' %}" alt="Akun"></a>
