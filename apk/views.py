@@ -8,9 +8,9 @@ from django.contrib.auth.hashers import make_password
 from django.db import IntegrityError
 from django.contrib.auth.hashers import check_password
 
-# Create your views here.
 def menu_awal(request):
     return render(request, 'apk/menu_awal.html')
+
 def login(request):
     error = None
     if request.method == 'POST':
@@ -19,7 +19,7 @@ def login(request):
 
         try:
             user = User.objects.get(username=username)
-            # Gunakan check_password untuk membandingkan password hash
+            
             if check_password(password, user.password):
                 request.session['user_id'] = user.id
                 return HttpResponseRedirect(reverse('home', args=[user.id]))
@@ -38,19 +38,16 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        # Validasi kosong
+        
         if not all([nama, username, email, password, confirm_password]):
             return render(request, 'apk/register.html', {'error': 'Semua kolom harus diisi.'})
 
-        # Validasi konfirmasi password
         if password != confirm_password:
             return render(request, 'apk/register.html', {'error': 'Konfirmasi password tidak cocok.'})
 
-        # Validasi username unik
         if User.objects.filter(username=username).exists():
             return render(request, 'apk/register.html', {'error': 'Username sudah digunakan.'})
 
-        # Validasi email unik
         if User.objects.filter(email=email).exists():
             return render(request, 'apk/register.html', {'error': 'Email sudah digunakan.'})
 
@@ -59,7 +56,7 @@ def register(request):
                 nama=nama,
                 username=username,
                 email=email,
-                password=make_password(password)  # enkripsi password
+                password=make_password(password)
             )
             return HttpResponseRedirect(reverse('login'))
         except IntegrityError:
@@ -68,7 +65,6 @@ def register(request):
     return render(request, 'apk/register.html')
 
 def home(request, user_id):
-    # Proteksi: hanya user yang sudah login dan sesuai user_id yang boleh akses
     if 'user_id' not in request.session or request.session['user_id'] != user_id:
         return HttpResponseRedirect(reverse('login'))
     user = User.objects.get(id=user_id)
@@ -81,7 +77,6 @@ def home(request, user_id):
         else:
             nominal = abs(float(nominal))
         Transaksi.objects.create(user=user, keterangan=keterangan, nominal=nominal)
-    # Ambil semua transaksi untuk saldo/grafik, tapi hanya 3 terakhir untuk tampilan
     semua_transaksi = Transaksi.objects.filter(user=user).order_by('tanggal')
     transaksi_list = Transaksi.objects.filter(user=user).order_by('-tanggal')[:3]
     saldo = 0
@@ -101,6 +96,12 @@ def home(request, user_id):
 
 def kalkulator(request):
     hasil = None
+    user = None
+    if 'user_id' in request.session:
+        try:
+            user = User.objects.get(id=request.session['user_id'])
+        except User.DoesNotExist:
+            user = None
     if request.method == 'POST':
         uang_awal = float(request.POST.get('uang_awal', 0))
         uang_tambahan = float(request.POST.get('uang_tambahan', 0))
@@ -108,7 +109,6 @@ def kalkulator(request):
         return_investasi = float(request.POST.get('return_investasi', 0))
         tahun = int(request.POST.get('tahun', 0))
         bulan = int(request.POST.get('bulan', 0))
-        # Hitung total bulan
         total_bulan = tahun * 12 + bulan
         if periode == 'hari':
             frekuensi = 30
@@ -116,16 +116,14 @@ def kalkulator(request):
             frekuensi = 4
         else:
             frekuensi = 1
-        # Konversi return ke per bulan
         r = return_investasi / 100 / 12
         saldo = uang_awal
         for i in range(total_bulan):
             saldo = saldo * (1 + r) + uang_tambahan * frekuensi
         hasil = saldo
-    return render(request, 'apk/kalkulator.html', {'hasil': hasil})
+    return render(request, 'apk/kalkulator.html', {'hasil': hasil, 'user': user})
 
 def profil(request, user_id):
-    # Proteksi: hanya user yang sudah login dan sesuai user_id yang boleh akses
     if 'user_id' not in request.session or request.session['user_id'] != user_id:
         return HttpResponseRedirect(reverse('login'))
     user = User.objects.get(id=user_id)
@@ -144,9 +142,7 @@ def edukasi(request):
     edukasi_list = Video.objects.all()
     return render(request, 'apk/edukasi.html', {'edukasi_list': edukasi_list, 'user': user})
 def logout(request):
-    # Hapus session user (jika ada) dan redirect ke menu awal
     if 'user_id' in request.session:
         del request.session['user_id']
-    # Jika pakai auth bawaan Django (opsional, jika pakai session login)
     django_logout(request)
     return HttpResponseRedirect(reverse('menu_awal'))
