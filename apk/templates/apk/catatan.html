@@ -1,0 +1,68 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Catatan Keuangan</title>
+    <link rel="stylesheet" href="{% static 'apk/catatan.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{% static 'apk/image/logo.png' %}" alt="HoneyMoney Logo">
+            <span>HoneyMoney</span>
+        </div>
+    </header>
+    <main>
+        <h2 class="catatan-title">
+            <span style="color:#009fe3;">Hallo,</span> <span style="color:#1976d2;">{{ user.username }}</span>
+        </h2>
+        <div class="catatan-subtitle">Selamat datang di HoneyMoney</div>
+        <div class="catatan-container">
+            <div class="catatan-table-header">
+                <span><img src="{% static 'apk/image/outcome.png' %}" alt="Pengeluaran" class="catatan-header-icon"> Pengeluaran</span>
+                <span class="catatan-header-center">Catatan Keuangan</span>
+                <span><img src="{% static 'apk/image/income.png' %}" alt="Pemasukan" class="catatan-header-icon"> Pemasukan</span>
+            </div>
+            <div class="catatan-table-body">
+                {% for t in transaksi_list %}
+                <div class="catatan-row">
+                    <span class="catatan-icon">
+                        {% if t.nominal < 0 %}
+                            <img src="{% static 'apk/image/outcome.png' %}" alt="Pengeluaran">
+                        {% else %}
+                            <img src="{% static 'apk/image/income.png' %}" alt="Pemasukan">
+                        {% endif %}
+                    </span>
+                    <span class="catatan-ket">
+                        {{ t.keterangan }}
+                    </span>
+                    <span class="catatan-date">{{ t.tanggal|date:"d M Y" }}</span>
+                    <span class="catatan-info">
+                        <div class="catatan-nominal">
+                            Rp. {{ t.nominal|floatformat:0|intcomma }}.00
+                        </div>
+                    </span>
+                </div>
+                {% empty %}
+                <div class="catatan-row-empty">Belum ada catatan keuangan.</div>
+                {% endfor %}
+            </div>
+            <div class="catatan-footer">
+                <a href="/home/{{ user.id }}/" class="catatan-back-link">
+                    <img src="{% static 'apk/image/back.png' %}" alt="Kembali" class="catatan-back-icon"> Kembali
+                </a>
+        </div>
+            <div class="fab-menu" id="fabMenu">
+            <div class="fab-actions">
+                <a href="/home/{{ user.id }}/" class="fab-action" title="Home"><img src="{% static 'apk/image/home.png' %}" alt="Home"></a>
+                <a href="{% url 'kalkulator' %}" class="fab-action" title="Kalkulator Investasi"><img src="{% static 'apk/image/calculator.png' %}" alt="Kalkulator"></a>
+                <a href="{% url 'edukasi' %}" class="fab-action" title="Video Edukasi"><img src="{% static 'apk/image/video.png' %}" alt="Video"></a>
+                <a href="/profil/{{ user.id }}/" class="fab-action" title="Info Akun"><img src="{% static 'apk/image/user.png' %}" alt="Akun"></a>
+            </div>
+            <button class="fab-btn" id="fabBtn" type="button"><img src="{% static 'apk/image/menu.png' %}" alt="Menu"></button>
+        </div>
+    </main>
+</body>
+</html>

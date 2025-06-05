@@ -1,0 +1,233 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7fa;
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 24px 48px 0 48px;
+    background: transparent;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo img {
+    width: 48px;
+}
+.catatan-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-top: -50px;
+    margin-bottom: 0;
+    font-weight: 700;
+}
+.catatan-subtitle {
+    text-align: center;
+    color: #444;
+    margin-bottom: 32px;
+    margin-top: 4px;
+}
+.catatan-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #eaf6fb;
+    border-radius: 28px;
+    padding-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(25,146,212,0.06);
+}
+.catatan-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px 12px 40px;
+    font-weight: 600;
+    color: #1976d2;
+    font-size: 1.1rem;
+    background: #eaf6fb;
+    border-radius: 28px 28px 0 0;
+}
+.catatan-header-icon {
+    width: 24px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.catatan-header-center {
+    flex: 1;
+    text-align: center;
+    font-size: 1.15rem;
+    color: #1976d2;
+}
+.catatan-table-body {
+    width: 100%;
+}
+.catatan-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+    border-bottom: 1px solid #d2e6f6;
+    background: #eaf6fb;
+    font-size: 1rem;
+}
+.catatan-row:last-child {
+    border-bottom: none;
+}
+.catatan-icon img {
+    width: 22px;
+    vertical-align: middle;
+}
+.catatan-ket {
+    color: #1976d2;
+    flex: 1;
+    margin-left: 16px;
+}
+.catatan-info {
+    text-align: center;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.catatan-date {
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 2px;
+    text-align: left;
+    min-width: 39%;
+}
+.catatan-nominal {
+    font-weight: 600;
+    color: #1976d2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    justify-content: center;
+}
+.catatan-nominal img {
+    width: 18px;
+    vertical-align: middle;
+}
+.catatan-row-empty {
+    text-align: center;
+    color: #888;
+    padding: 32px 0;
+    font-size: 1.1rem;
+}
+@media (max-width: 700px) {
+    .catatan-container, .catatan-table-header, .catatan-row {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .catatan-title {
+        font-size: 1.3rem;
+    }
+}
+
+.fab-menu {
+    position: fixed;
+    right: 32px;
+    bottom: 32px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fab-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #1992d4 60%, #3ec6ff 100%);
+    box-shadow: 0 4px 16px rgba(25,146,212,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+.fab-btn img {
+    width: 38px;
+    height: 38px;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin: auto;
+}
+.fab-actions {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    gap: 16px;
+    position: relative;
+    width: auto;
+    background: none;
+    box-shadow: none;
+}
+.fab-menu.open .fab-actions {
+    display: flex;
+}
+.fab-action {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #1992d4 60%, #3ec6ff 100%);
+    box-shadow: 0 2px 8px rgba(25,146,212,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    border: none;
+    outline: none;
+    margin-bottom: 8px;
+    position: relative;
+    padding: 0;
+}
+.fab-action img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
+    display: block;
+    margin: auto;
+}
+.fab-action:hover {
+    background: linear-gradient(180deg, #3ec6ff 60%, #1992d4 100%);
+    box-shadow: 0 4px 16px rgba(25,146,212,0.18);
+}
+
+.catatan-footer {
+    text-align: left;
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 24px;
+    padding: 16px 0;
+    background: #eaf6fb;
+    border-radius: 0 0 28px 28px;
+    margin-left: 4%;
+}
+
+.catatan-footer a {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.catatan-footer a:hover {
+    text-decoration: underline;
+}
+
+.catatan-footer a:visited {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.catatan-footer img {
+    width: 5%;
+    vertical-align: middle;
+}

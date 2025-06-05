@@ -22,7 +22,7 @@
         <div class="main-container">
             <div class="left-panel">
                 <div class="card riwayat">
-                    <h3 class="card-title"><a href="#" style="text-decoration: none; color: #1992d4;">Catatan Keuangan</a></h3>
+                    <h3 class="card-title"><a href="/catatan/{{ user.id }}/" style="text-decoration: none; color: #1992d4;">Catatan Keuangan</a></h3>
                     <table class="riwayat-table">
                         <tbody>
                         {% for transaksi in transaksi_list|slice:'0:4' %}

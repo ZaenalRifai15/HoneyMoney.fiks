@@ -146,3 +146,13 @@ def logout(request):
         del request.session['user_id']
     django_logout(request)
     return HttpResponseRedirect(reverse('menu_awal'))
+
+def catatan(request, user_id):
+    if 'user_id' not in request.session or request.session['user_id'] != user_id:
+        return HttpResponseRedirect(reverse('menu_awal'))
+    user = User.objects.get(id=user_id)
+    transaksi_list = Transaksi.objects.filter(user=user).order_by('-tanggal')
+    return render(request, 'apk/catatan.html', {
+        'user': user,
+        'transaksi_list': transaksi_list,
+    })

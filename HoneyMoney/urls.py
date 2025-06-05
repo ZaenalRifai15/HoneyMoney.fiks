@@ -13,7 +13,8 @@ urlpatterns = [
     path('kalkulator/', views.kalkulator, name='kalkulator'),
     path('profil/<int:user_id>/', views.profil, name='profil'),
     path('edukasi/', views.edukasi, name='edukasi'),
-    path('logout/', views.logout, name='logout'),  # Tambah route logout
+    path('logout/', views.logout, name='logout'),
+    path('catatan/<int:user_id>/', views.catatan, name='catatan'),
 ]
 
 if settings.DEBUG:
